@@ -17,6 +17,10 @@ contract Election {
   // Store accounts that have voted
   mapping(address => bool) public voters;
 
+  event votedEvent(
+    uint indexed _candidateId
+  );
+
   function addCandidate(string memory _name) private {
     candidatesCount++;
     candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
@@ -34,6 +38,9 @@ contract Election {
 
     // update candidate vote Count
     candidates[_candidateId].voteCount++;
+
+    //triger voted event
+    emit votedEvent(_candidateId);
   }
 
   constructor() public {
